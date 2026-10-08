@@ -39,6 +39,9 @@ public class BattleMonster {
                 // check if thers a puppy
                 if(puppy != null){
                     // check if puppy attacks
+                    // run a 1/100 chance the puppuy goes john wick
+                   
+
 
 
 
