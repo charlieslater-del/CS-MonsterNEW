@@ -2,7 +2,7 @@ public class Quiz {
 
 
     public String maybeReverse(String str){
-        double math = Math.random(): 
+        double math = Math.random(); 
 
 
         if(math<0.5){
