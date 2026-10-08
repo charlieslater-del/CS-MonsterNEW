@@ -1,17 +1,30 @@
 public class Quiz {
 
 
-    public String brokenMirror(String str){
-        String result ="";
-        for(int i = str.length() - 1; i > -1; i-=2){
-            result = result + str.substring(i, i+1);
+    public String maybeReverse(String str){
+        double math = Math.random(): 
+
+
+        if(math<0.5){
+            for(int i = str.length() - 1; i >= 0; i--){
+                String reverse = ""; 
+                reverse = reverse + str.substring(i, i-1);
+
+                return reverse;
+            }
+
+
+
+
         }
+        return str; 
 
-
-
-
-        return result;
 
     }
     
+
+
+
+
+
 }
