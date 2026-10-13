@@ -1,5 +1,5 @@
 public class Quiz {
-
+// quiz study work page
 
     public String maybeReverse(String str){
         double math = Math.random(); 

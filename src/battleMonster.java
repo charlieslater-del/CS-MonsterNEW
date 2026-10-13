@@ -38,10 +38,14 @@ public class BattleMonster {
             else if(input.equals("attack")){
                 // check if thers a puppy
                 if(puppy != null){
+
+                    double r = Math.random(); 
+                    if(r < 0.01)johnWick();
                     // check if puppy attacks
                     // run a 1/100 chance the puppuy goes john wick
                    
-
+                    int damage = (int)(Math.random() * maxDmg);
+                    findWeakest().takeDmg(damage);
 
 
 
@@ -60,6 +64,13 @@ public class BattleMonster {
             
             // heal 
 
+            else if(input.equals("heal")){
+                // (diff + 1) + min
+                int random = (int)(Math.random() * 91) + 10; 
+                playerHealth += random;
+                System.out.println("you heal for " + random " points. (Current health: " + playerHealth +")");   
+            }
+
             
 
 
@@ -76,6 +87,24 @@ public class BattleMonster {
             if(monsters[i] != null) return false; 
         }
         return true;
+    }
+
+
+    public static Monster findWeakest(){
+        // grab the first non null monsters as our weakest 
+        Monster result; 
+        for(Monster m: monsters) if(m != null) result = m;
+
+        // look for a weaker monster 
+        for(Monster m: monsters){ 
+            if(m!= null && m.health() < result.health()){ 
+                result = m;
+            }
+        }
+        
+        // return the weakest 
+        return result; 
+
     }
 
 public static void makeMonster(){
