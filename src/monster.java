@@ -17,8 +17,8 @@ public class Monster{
 
     // MUTATORS 
     public void takeDmg(int change){
-        health -= dmg; 
-        System.out.println("monster takes " + dmg + " damage.");
+        health -= maxDmg; 
+        System.out.println("monster takes " + maxDmg + " damage.");
         if(health <=0) System.out.println("aww monswer ded :(");
     }
 }

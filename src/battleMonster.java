@@ -16,7 +16,7 @@ public class BattleMonster {
         String input = "";
 
         // INTRO 
-        System.out.println("your choice: fight or puppy");
+        System.out.println("your choice: attack or puppy?");
 
         // GAME LOOP
         do{
@@ -45,8 +45,9 @@ public class BattleMonster {
                     // run a 1/100 chance the puppuy goes john wick
                    
                     int damage = (int)(Math.random() * maxDmg);
-                    findWeakest().takeDmg(damage);
-
+                    Monster target = findWeakest();
+                    target.takeDmg(damage);
+                    if (target.health() <= 0) target = null;
 
 
                 }
@@ -57,7 +58,25 @@ public class BattleMonster {
 
 
             // MONSTERS' TURN
-            
+            for(Monster m : monsters){
+                if(m == null){
+                    // chance that a monster gets created 
+                   int randomMcRandomFace = (int)(Math.random()*10);
+                   if(randomMcRandomFace> 7) {
+                    m = new Monster(); 
+                    System.out.println("ruh-ro. a new monster has joined the battlefield");
+
+                   }
+                    
+
+                }else{
+                    // monster attack human
+                    int dmgFromMonster = (int)(Math.random()* m.maxDmg() + 1); 
+                    playerHealth -= dmgFromMonster; 
+                    System.out.println("/n monster hits for " + dmgFromMonster);
+                    System.out.println("current health: " + playerHealth + "/n");
+                }
+            }
                 
 
             }
@@ -68,7 +87,7 @@ public class BattleMonster {
                 // (diff + 1) + min
                 int random = (int)(Math.random() * 91) + 10; 
                 playerHealth += random;
-                System.out.println("you heal for " + random " points. (Current health: " + playerHealth +")");   
+                System.out.println("you heal for " + random + " points. (Current health: " + playerHealth +")");   
             }
 
             
@@ -92,7 +111,7 @@ public class BattleMonster {
 
     public static Monster findWeakest(){
         // grab the first non null monsters as our weakest 
-        Monster result; 
+        Monster result = null; 
         for(Monster m: monsters) if(m != null) result = m;
 
         // look for a weaker monster 
