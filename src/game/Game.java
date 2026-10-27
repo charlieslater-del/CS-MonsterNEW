@@ -3,10 +3,6 @@ import java.util.ArrayList;
 
 import gui.MonsterBattleGUI;
 
-/**
- * Your game. GameDemo.java is a finished one to copy patterns from.
- * Fill in each TODO, and run this file after every change.
- */
 public class Game {
     
     // The window. You call its methods; you never need to open src/gui.
@@ -29,28 +25,24 @@ public class Game {
         gameLoop();
     }
     
-    // TODO: How much health, how many monsters, which items? Your choice.
     private void setupGame() {
         // Create the GUI
-        gui = new MonsterBattleGUI("Monster Battle - MY GAME");
+        gui = new MonsterBattleGUI("Off Brand Dungeon Crawler Carl (i unfortuanatly haven't read it)");
         
-        // TODO: Setup player health
-        maxHealth = 100;  // Change this if you want
-        playerHealth = 100;
+        
+        maxHealth = 100;  
+        playerHealth = 75;
         gui.setPlayerMaxHealth(maxHealth);
         gui.updatePlayerHealth(playerHealth);
         
-        // TODO: Create monsters - how many do you want?
         monsters = new ArrayList<>();
-        monsters.add(new Monster());  // Add more monsters here!
-        monsters.add(new Monster());
+        monsters.add(new Monster()); 
         gui.updateMonsters(monsters);
         
         // TODO: Create starting items (GameDemo's addBomb() shows the shape)
         inventory = new ArrayList<>();
         gui.updateInventory(inventory);
         
-        // TODO: Customize button labels
         String[] buttons = {"Attack", "Defend", "Heal", "Use Item"};
         gui.setActionButtons(buttons);
         
@@ -106,7 +98,13 @@ public class Game {
     
     // TODO: How much damage, and to which monster?
     private void attackMonster() {
-        gui.displayMessage("TODO: Implement attack!");
+        gui.displayMessage("JOHN WICK");
+        for(Monster m : monsters){
+            // kill each one
+            int damage = 10000000;
+            if(monsters != null) monsters.takeDamage(damage);
+            
+        }
     }
     
     // TODO: What does defending change? Less damage next turn? A blocked hit?
