@@ -12,6 +12,8 @@ public class Game {
     private ArrayList<Monster> monsters;
     private ArrayList<Item> inventory;
     private int playerHealth;
+    private int shield = 0; 
+    private int SHIELD_UP = 20;
     private int maxHealth;
     
     public static void main(String[] args) {
@@ -100,21 +102,30 @@ public class Game {
     private void attackMonster() {
         gui.displayMessage("JOHN WICK");
         for(Monster m : monsters){
-            // kill each one
-            int damage = 10000000;
-            if(monsters != null) monsters.takeDamage(damage);
+            // kill each one=
+            if(m != null) m.takeDamage(m.health());
             
         }
     }
     
-    // TODO: What does defending change? Less damage next turn? A blocked hit?
+
     private void defend() {
-        gui.displayMessage("TODO: Implement defend!");
+       
+        shield += SHIELD_UP; 
+        gui.displayMessage("SHIELD UP! Current shield: " + shield);
+
     }
     
     // TODO: How much health back, and can it go past maxHealth?
     private void heal() {
-        gui.displayMessage("TODO: Implement heal!");
+        // random number 0-40
+        int healNumber = 0;
+        if(playerHealth > maxHealth){
+            maxHealth = playerHealth;
+            gui.setPlayerMaxHealth(maxHealth);
+        } 
+        gui.updatePlayerHealth(playerHealth);
+        gui.displayMessage("You healed for " + healNumber + " points");
     }
     
     // Uses the first item in the inventory.
