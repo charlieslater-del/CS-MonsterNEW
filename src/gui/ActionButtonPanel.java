@@ -1,13 +1,11 @@
 package gui;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
 /**
- * ActionButtonPanel - Four customizable action buttons
- * 
- * Provides four large, attractive buttons that students can customize
- * for different game actions (Attack, Defend, Heal, etc.)
+ * ActionButtonPanel - Four customizable action buttons styled with an Orange & Blue theme.
  */
 public class ActionButtonPanel extends JPanel {
     
@@ -19,12 +17,17 @@ public class ActionButtonPanel extends JPanel {
         "Action 1", "Action 2", "Action 3", "Action 4"
     };
     
-    // Visual constants
-    private static final Color BUTTON_BG = new Color(70, 130, 180);
-    private static final Color BUTTON_HOVER = new Color(100, 149, 237);
-    private static final Color BUTTON_PRESSED = new Color(50, 100, 150);
-    private static final Color BUTTON_DISABLED = new Color(100, 100, 100);
-    private static final Font BUTTON_FONT = new Font("Arial", Font.BOLD, 16);
+    // --- Orange & Blue Color Palette ---
+    private static final Color PANEL_BG = new Color(26, 32, 44);         // Deep slate blue container
+    private static final Color BUTTON_BG = new Color(43, 54, 73);        // Dark slate blue button body
+    private static final Color BUTTON_HOVER = new Color(59, 74, 107);    // Brighter slate blue on hover
+    private static final Color BUTTON_PRESSED = new Color(229, 142, 38);  // Warm orange when clicked
+    private static final Color BUTTON_DISABLED = new Color(45, 50, 60);  // Dark muted grey for disabled state
+    
+    private static final Color BORDER_COLOR = new Color(255, 159, 67);  // Vibrant orange border
+    private static final Color TEXT_DISABLED = new Color(100, 110, 125); // Muted text color when disabled
+    
+    private static final Font BUTTON_FONT = new Font("Segoe UI", Font.BOLD, 15);
     
     /**
      * Constructor
@@ -34,8 +37,9 @@ public class ActionButtonPanel extends JPanel {
         this.actionListener = listener;
         this.buttons = new JButton[4];
         
-        setLayout(new GridLayout(1, 4, 10, 0));
-        setBackground(new Color(40, 40, 50));
+        setLayout(new GridLayout(1, 4, 12, 0)); // 12px gap between buttons
+        setBackground(PANEL_BG);
+        setBorder(BorderFactory.createEmptyBorder(8, 8, 8, 8)); // Container padding
         
         createButtons();
     }
@@ -63,14 +67,17 @@ public class ActionButtonPanel extends JPanel {
         button.setForeground(Color.WHITE);
         button.setFocusPainted(false);
         button.setBorderPainted(true);
+        
+        // Stylish double border: vibrant orange outline with inner margin
         button.setBorder(BorderFactory.createCompoundBorder(
-            BorderFactory.createLineBorder(Color.WHITE, 2),
-            BorderFactory.createEmptyBorder(15, 20, 15, 20)
+            BorderFactory.createLineBorder(BORDER_COLOR, 2, true),
+            BorderFactory.createEmptyBorder(12, 16, 12, 16)
         ));
+        
         button.setActionCommand(String.valueOf(index));
         button.addActionListener(actionListener);
         
-        // Add hover effects
+        // Add hover and click state effects
         button.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
@@ -98,7 +105,13 @@ public class ActionButtonPanel extends JPanel {
             @Override
             public void mouseReleased(MouseEvent e) {
                 if (button.isEnabled()) {
-                    button.setBackground(BUTTON_HOVER);
+                    // Return to hover background if mouse is still within bounds
+                    Point point = e.getPoint();
+                    if (button.contains(point)) {
+                        button.setBackground(BUTTON_HOVER);
+                    } else {
+                        button.setBackground(BUTTON_BG);
+                    }
                 }
             }
         });
@@ -111,7 +124,7 @@ public class ActionButtonPanel extends JPanel {
      * @param labels Array of 4 labels
      */
     public void setButtonLabels(String[] labels) {
-        if (labels.length != 4) {
+        if (labels == null || labels.length != 4) {
             throw new IllegalArgumentException("Must provide exactly 4 labels");
         }
         
@@ -128,8 +141,7 @@ public class ActionButtonPanel extends JPanel {
     public void setEnabled(boolean enabled) {
         super.setEnabled(enabled);
         for (JButton button : buttons) {
-            button.setEnabled(enabled);
-            button.setBackground(enabled ? BUTTON_BG : BUTTON_DISABLED);
+            applyEnabledState(button, enabled);
         }
     }
     
@@ -140,8 +152,21 @@ public class ActionButtonPanel extends JPanel {
      */
     public void setButtonEnabled(int index, boolean enabled) {
         if (index >= 0 && index < 4) {
-            buttons[index].setEnabled(enabled);
-            buttons[index].setBackground(enabled ? BUTTON_BG : BUTTON_DISABLED);
+            applyEnabledState(buttons[index], enabled);
+        }
+    }
+    
+    /**
+     * Helper to update visual state when enabled/disabled
+     */
+    private void applyEnabledState(JButton button, boolean enabled) {
+        button.setEnabled(enabled);
+        if (enabled) {
+            button.setBackground(BUTTON_BG);
+            button.setForeground(Color.WHITE);
+        } else {
+            button.setBackground(BUTTON_DISABLED);
+            button.setForeground(TEXT_DISABLED);
         }
     }
 }

@@ -98,7 +98,6 @@ public class Game {
         }
     }
     
-    // TODO: How much damage, and to which monster?
     private void attackMonster() {
         gui.displayMessage("JOHN WICK");
         for(Monster m : monsters){
@@ -116,10 +115,9 @@ public class Game {
 
     }
     
-    // TODO: How much health back, and can it go past maxHealth?
     private void heal() {
         // random number 0-40
-        int healNumber = 0;
+        int healNumber =(int)(Math.random() * 40); 
         if(playerHealth > maxHealth){
             maxHealth = playerHealth;
             gui.setPlayerMaxHealth(maxHealth);

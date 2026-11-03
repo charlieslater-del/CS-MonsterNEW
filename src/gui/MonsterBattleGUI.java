@@ -1,4 +1,5 @@
 package gui;
+
 import javax.swing.*;
 
 import game.Item;
@@ -9,20 +10,9 @@ import java.awt.event.*;
 import java.util.ArrayList;
 
 /**
- * MonsterBattleGUI - A simple display API for monster battle games
+ * MonsterBattleGUI - Main window frame with a sleek Dark Slate Blue & Orange aesthetic.
  * 
- * This class provides methods to display your game state.
- * You control the game loop - just call these methods to update the display!
- * 
- * STUDENT API METHODS:
- * - updateMonsters(ArrayList<Monster>) - Show current monsters
- * - updatePlayerHealth(int) - Show player health
- * - setPlayerSpeed(int) - Set player speed stat
- * - updateInventory(ArrayList<Item>) - Show items
- * - displayMessage(String) - Show a message
- * - setActionButtons(String[]) - Label the 4 buttons
- * - waitForAction() - Wait for button click, returns 0-3
- * - highlightMonster(int) - Highlight a monster briefly
+ * Provides methods to update your game state.
  */
 public class MonsterBattleGUI extends JFrame {
     
@@ -32,6 +22,10 @@ public class MonsterBattleGUI extends JFrame {
     private InventoryPanel inventoryPanel;
     private MessagePanel messagePanel;
     private PlayerStatusPanel playerStatusPanel;
+    
+    // Theme Colors
+    private static final Color DARK_BLUE = new Color(26, 32, 44);       // Slate panel background
+    private static final Color ACCENT_ORANGE = new Color(255, 159, 67);  // Orange highlight for title/borders
     
     // For button clicks
     private int selectedAction = -1;
@@ -44,10 +38,11 @@ public class MonsterBattleGUI extends JFrame {
      */
     public MonsterBattleGUI(String title) {
         super(title);
+        
         initializeComponents();
         layoutComponents();
         
-        setSize(1000, 800);
+        setSize(1040, 820);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setResizable(false);
@@ -66,27 +61,34 @@ public class MonsterBattleGUI extends JFrame {
     }
     
     /**
-     * Layout components
+     * Layout components with consistent dark backgrounds and spacing
      */
     private void layoutComponents() {
-        setLayout(new BorderLayout(10, 10));
+        Container rootPane = getContentPane();
+        rootPane.setBackground(DARK_BLUE);
+        rootPane.setLayout(new BorderLayout(12, 12));
         
-        // Center: Monsters
+        // Center: Monsters area
         add(monsterPanel, BorderLayout.CENTER);
         
-        // Bottom: Player status, buttons, messages
+        // Bottom: Player status, action buttons, and battle log
         JPanel bottomPanel = new JPanel(new BorderLayout(10, 10));
+        bottomPanel.setOpaque(false);
+        
         JPanel controlPanel = new JPanel(new BorderLayout(10, 10));
+        controlPanel.setOpaque(false);
         controlPanel.add(playerStatusPanel, BorderLayout.NORTH);
         controlPanel.add(buttonPanel, BorderLayout.CENTER);
+        
         bottomPanel.add(controlPanel, BorderLayout.CENTER);
         bottomPanel.add(messagePanel, BorderLayout.SOUTH);
         add(bottomPanel, BorderLayout.SOUTH);
         
-        // Right: Inventory
+        // Right: Inventory side panel
         add(inventoryPanel, BorderLayout.EAST);
         
-        ((JPanel)getContentPane()).setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        // Window inner edge margin
+        ((JPanel) getContentPane()).setBorder(BorderFactory.createEmptyBorder(12, 12, 12, 12));
     }
     
     // ==================== STUDENT API METHODS ====================
@@ -144,7 +146,7 @@ public class MonsterBattleGUI extends JFrame {
      * @param labels Array of 4 button labels
      */
     public void setActionButtons(String[] labels) {
-        if (labels.length != 4) {
+        if (labels == null || labels.length != 4) {
             throw new IllegalArgumentException("Must provide exactly 4 button labels");
         }
         SwingUtilities.invokeLater(() -> buttonPanel.setButtonLabels(labels));

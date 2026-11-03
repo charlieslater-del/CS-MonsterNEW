@@ -1,4 +1,9 @@
 package game;
+
+import java.util.ArrayList;
+
+import gui.MonsterBattleGUI;
+
 public class Monster {
     // INSTANCE VARIABLES (properties)
     private int health;
@@ -30,8 +35,23 @@ public class Monster {
     public String special() { return this.special; }
 
     // MUTATOR METHODS
-    public void takeDamage(int dmg){
-        health -= dmg;
+    public void takeDamage(int dmg){health -= dmg;}
+
+    public void heal(int heal) {health += heal;}
+
+    public void heal(Monster friend, int heal){
+        friend.heal(heal); 
+    }
+
+    public void jan6(ArrayList<Monster> monsters, MonsterBattleGUI gui){
+        for(Monster m : monsters){
+            // power ups
+            if(m != null) {
+                m.health(m.maxHealth());
+                m.damage(damage += 20);
+            }
+        }
+
     }
 
     // UTILITY MNETHOD
