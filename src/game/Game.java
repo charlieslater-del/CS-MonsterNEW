@@ -31,6 +31,7 @@ public class Game {
         // Create the GUI
         gui = new MonsterBattleGUI("Off Brand Dungeon Crawler Carl (i unfortuanatly haven't read it)");
         
+        // dificulty selection 
         
         maxHealth = 100;  
         playerHealth = 75;
@@ -109,6 +110,7 @@ public class Game {
     
 
     private void defend() {
+        // figure out how to get shield on the gui 
        
         shield += SHIELD_UP; 
         gui.displayMessage("SHIELD UP! Current shield: " + shield);
@@ -139,9 +141,12 @@ public class Game {
         item.use();  // The item knows what to do!
     }
     
-    // TODO: Which monster attacks, and for how much? A special move goes here.
+   
     private void monsterAttack() {
-        gui.displayMessage("TODO: Implement monster attack!");
+        Monster monster = getRandomLivingMonster(); // TODO: be smart :) I believe in you 
+        playerHealth -= monster.damage(); 
+        gui.displayMessage("Monster hits for " + monster.damage()); 
+        gui.updatePlayerHealth(playerHealth);
     }
     
     // Helpers. Add your own below these two.

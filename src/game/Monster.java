@@ -44,12 +44,7 @@ public class Monster {
     }
 
     public void jan6(ArrayList<Monster> monsters, MonsterBattleGUI gui){
-        for(Monster m : monsters){
-            // power ups
-            if(m != null) {
-                m.health(m.maxHealth());
-                m.damage(damage += 20);
-            }
+        for(Monster m : monsters){m.twoFast2furious}
         }
 
     }
