@@ -15,6 +15,10 @@ public class Game {
     private int shield = 0; 
     private int SHIELD_UP = 20;
     private int maxHealth;
+
+    // ACCESSORS
+    public MonsterBattleGUI getGUI(){ return gui;}
+    public ArrayList<Monster> getMonsters() {return monsters;}
     
     public static void main(String[] args) {
         // main is static, so it makes one Game object to play (Unit 3.7).
@@ -39,7 +43,9 @@ public class Game {
         gui.updatePlayerHealth(playerHealth);
         
         monsters = new ArrayList<>();
-        monsters.add(new Monster()); 
+        monsters.add(new Monster(this)); 
+        monsters.add(new Monster(this, "pfundstein"));
+        monsters.add(new Monster(this, "robotics"));
         gui.updateMonsters(monsters);
         
         // TODO: Create starting items (GameDemo's addBomb() shows the shape)
@@ -100,13 +106,14 @@ public class Game {
     }
     
     private void attackMonster() {
-        gui.displayMessage("JOHN WICK");
-        for(Monster m : monsters){
-            // kill each one=
-            if(m != null) m.takeDamage(m.health());
-            
-        }
-    }
+       Monster target = getRandomLivingMonster();
+       // determine damage
+        int damage = (int)(Math.random() * 10 + 10);
+       // apply damage
+        target.takeDamage(damage);
+       // show message
+       gui.displayMessage("you hit for " + damage + " points!");
+    } 
     
 
     private void defend() {
