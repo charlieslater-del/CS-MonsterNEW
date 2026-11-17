@@ -12,8 +12,7 @@ public class Game {
     private ArrayList<Monster> monsters;
     private ArrayList<Item> inventory;
     private int playerHealth;
-    private int shield = 0; 
-    private int SHIELD_UP = 20;
+    private boolean shield_up = false;
     private int maxHealth;
 
     // ACCESSORS
@@ -119,8 +118,8 @@ public class Game {
     private void defend() {
         // figure out how to get shield on the gui 
        
-        shield += SHIELD_UP; 
-        gui.displayMessage("SHIELD UP! Current shield: " + shield);
+         
+        gui.displayMessage("SHIELD UP! all damage will be halved");
 
     }
     
@@ -150,8 +149,18 @@ public class Game {
     
    
     private void monsterAttack() {
-        Monster monster = getRandomLivingMonster(); // TODO: be smart :) I believe in you 
-        playerHealth -= monster.damage(); 
+        Monster monster = getRandomLivingMonster();
+          
+        double incomingDamage = monster.damage();
+        if(shield_up){
+            incomingDamage /= 2; 
+        }
+        playerHealth -= incomingDamage;
+
+        gui.displayMessage("Monster hits for " + monster.damage());
+        
+
+
         gui.displayMessage("Monster hits for " + monster.damage()); 
         gui.updatePlayerHealth(playerHealth);
     }

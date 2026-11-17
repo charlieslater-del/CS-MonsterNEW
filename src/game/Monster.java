@@ -27,6 +27,8 @@ public class Monster {
         this.special = special;
         if (special.equals("pfundstein")){
             game.getGUI().displayMessage("Keep leading!");
+        }if (special.equals("robotics")){
+            game.getGUI().displayMessage("is the CAD done?");
         }
         
     }
