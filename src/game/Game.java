@@ -35,9 +35,7 @@ public class Game {
         gui = new MonsterBattleGUI("Off Brand Dungeon Crawler Carl (i unfortuanatly haven't read it)");
         
         // dificulty selection 
-        
-        maxHealth = 100;  
-        playerHealth = 75;
+        playerHealth = 100;
         gui.setPlayerMaxHealth(maxHealth);
         gui.updatePlayerHealth(playerHealth);
         
@@ -47,8 +45,11 @@ public class Game {
         monsters.add(new Monster(this, "robotics"));
         gui.updateMonsters(monsters);
         
-        // TODO: Create starting items (GameDemo's addBomb() shows the shape)
+        
         inventory = new ArrayList<>();
+        addHealthPotion(40);
+        addBomb(15);
+        addPuppy(100);
         gui.updateInventory(inventory);
         
         String[] buttons = {"Attack", "Defend", "Heal", "Use Item"};
@@ -145,7 +146,44 @@ public class Game {
         Item item = inventory.remove(0);
         gui.updateInventory(inventory);
         item.use();  // The item knows what to do!
+
+        
     }
+    //health potion 
+    private void addHealthPotion(int healAmount) {
+        inventory.add(new Item("Health Potion", "🧪", () -> {
+            playerHealth = Math.min(maxHealth, playerHealth + healAmount);
+            gui.updatePlayerHealth(playerHealth);
+            gui.displayMessage("💚 Used Health Potion! Healed " + healAmount + " HP!");
+        }));
+    }
+    
+    //bomb damages all monsters
+    private void addBomb(int damage) {
+        inventory.add(new Item("Bomb", "💣", () -> {
+            for (Monster m : monsters) {
+                if (m.health() > 0) {
+                    m.takeDamage(damage);
+                }
+            }
+            gui.displayMessage("💣 BOOM! All monsters take " + damage + " damage!");
+            gui.updateMonsters(monsters);
+        }));
+    }
+
+    //puppy attacks all monsters
+    private void addPuppy(int damage){
+        inventory.add(new Item("Puppy", "🐶", () -> {
+            for(Monster m: monsters) {
+                if (m.health() > 0){
+                    m.takeDamage(damage);
+                }
+            }
+            gui.displayMessage("Woof. All monsters take " + damage + " damage!");
+            gui.updateMonsters(monsters);
+        }));
+    }
+    
     
    
     private void monsterAttack() {
